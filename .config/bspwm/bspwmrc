@@ -1,0 +1,19 @@
+#! /bin/sh
+
+. ~/Colorschemes/scheme
+
+bspc monitor -d 1 2 3 4
+
+bspc config border_width        3 
+bspc config window_gap          12
+bspc config focused_border_color $SFG
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+bspc config top_padding 12
+
+bspc config external_rules_command /root/.config/bspwm/external_rules
+
+lemon_feeder &

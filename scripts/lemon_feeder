@@ -1,0 +1,43 @@
+#!/bin/bash
+
+[ -e "$LEMON_FIFO" ] && rm "$LEMON_FIFO"
+mkfifo "$LEMON_FIFO"
+
+. ~/Colorschemes/scheme 
+
+bspc subscribe > "$LEMON_FIFO" &
+
+get_master() {
+	amixer get Master | grep '%' | cut -d" " -f6 | tr -d '[]%'
+}
+
+clock() {
+	date '+%H:%M' 
+}
+
+get_date() {
+	date '+%a %d-%m-%y'
+}
+
+cpu() {
+	ps -eo pcpu | grep -vE '0.0|%CPU' | tr -d " " |  awk '{sum += $1} END {print sum}' 
+}
+
+ram() {
+	grep -E 'Mem(Total|Free)' /proc/meminfo | awk '{print $2}' | paste -d"/" - - | sed 's/\([^/]*\)\/\(.*\)$/\2\/\1\*100/' | bc -l | cut -d"." -f1
+}
+
+lemon_consumer < "$LEMON_FIFO" | lemonbar -B $NBG -F $NFG -u "2px" -U $PNU -f "Terminus-9" -f "FontAwesome-10" &
+
+echo "VOL$(get_master)" > $LEMON_FIFO
+
+while true
+do
+	echo "CLK$(clock)" > $LEMON_FIFO 
+	echo "DTE$(get_date)" > $LEMON_FIFO
+	echo "RAM$(ram)" > $LEMON_FIFO
+	echo "CPU$(cpu)" > $LEMON_FIFO
+	sleep 1
+done
+
+

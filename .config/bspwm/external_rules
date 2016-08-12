@@ -1,0 +1,18 @@
+#!/bin/bash
+
+wid=$1
+class=$2
+instance=$3
+
+if [[ "$instance" = urxvt ]] && [[ $(bspc query -d -N | wc -l) < 1 ]] ; then
+	#screen_width=$(xrandr 2> /dev/null | tail -1 | awk '{print $1}' | cut -d"x" -f1)
+	#screen_height=$(xrandr 2> /dev/null | tail -1 | awk '{print $1}' | cut -d"x" -f2)
+	#x_offset=$(echo $screen_width | awk '{print $1/4}')
+	#y_offset=$(echo $screen_height | awk '{print $1*0.325}')
+
+	#echo "state=floating"
+	echo "state=pseudo_tiled"
+	xdotool windowsize $wid 45% 32%
+	#xdotool windowmove $wid $x_offset $y_offset
+fi	
+

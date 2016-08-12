@@ -1,0 +1,21 @@
+#!/bin/bash
+
+num_desktops=$(bspc query -D | wc -l)
+
+while read -r line ; do
+	case $line in
+		VOL*) vol="${line#VOL}" ;;
+		CPU*) cpu="${line#CPU}" ;;
+		RAM*) ram="${line#RAM}" ;;
+		CLK*) clk="${line#CLK}" ;;
+		DTE*) dte="${line#DTE}" ;;
+		WMd*) cur=$(echo "$line" | cut -d":" -f2-$(((num_desktops)+1)) | tr ":" "\n" | grep "[OFU]" | tr -d "[OFU]") ;; 
+	esac
+
+	desktops=($(eval echo {1..$num_desktops}))
+	desktops[$cur - 1]="%{+u}$cur%{-u}"
+		
+	echo -e "%{l}${desktops[*]} %{c}\uf017 $clk %{r}\uf073 $dte    \uf028 $vol%    \uf080 $cpu%    \uf0c9 $ram%    ";
+done
+
+

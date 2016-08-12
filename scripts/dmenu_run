@@ -1,0 +1,24 @@
+#!/bin/sh
+cachedir=${XDG_CACHE_HOME:-"$HOME/.cache"}
+if [ -d "$cachedir" ]; then
+	cache=$cachedir/dmenu_run
+else
+	cache=$HOME/.dmenu_cache # if no xdg dir, fall back to dotfile in ~
+fi
+
+screen_width=$(xrandr 2> /dev/null | tail -1 | awk '{print $1}' | cut -d"x" -f1)
+screen_height=$(xrandr 2> /dev/null | tail -1 | awk '{print $1}' | cut -d"x" -f2)
+
+x_offset=$(echo $screen_width | awk '{print $1/3}')
+y_offset=$(echo $screen_height | awk '{print $1/3}')
+
+. ~/Colorschemes/scheme
+
+(
+	IFS=:
+	if stest -dqr -n "$cache" $PATH; then
+		stest -flx $PATH | sort -u | tee "$cache" | dmenu -l 3 -w $x_offset -x $x_offset -y $y_offset "$@" -nb $NBG -nf $NFG -sf $SFG -sb $SBG -fn "Terminus:size=9"
+	else
+		dmenu -l 3 -w $x_offset -x $x_offset -y $y_offset "$@" -nb $NBG -nf $NFG -sf $SFG -sb $SBG -fn "Terminus:size=9" < "$cache"
+	fi
+) | ${SHELL:-"/bin/sh"} &

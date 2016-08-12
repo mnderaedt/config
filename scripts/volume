@@ -1,0 +1,4 @@
+#!/bin/bash
+
+amixer set Master $1 | sed -n "s/^.*\[\([0-9][0-9]\?\)\%.*$/VOL\1/p" > $LEMON_FIFO
+
