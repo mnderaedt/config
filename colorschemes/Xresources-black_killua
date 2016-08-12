@@ -1,0 +1,47 @@
+! URxvt
+
+! General settings
+
+URxvt.scrollBar: False
+URxvt.cursorBlink: False
+URxvt.scrollstyle: rxvt
+URxvt.font: xft:Terminus:size=9
+
+#define COLOR0 #121212
+#define COLOR1 #0a0a0a
+#define COLOR2 #d75f5f
+#define COLOR3 #d787af
+#define COLOR4 #00af87
+#define COLOR5 #5faf5f
+#define COLOR6 #afd75f
+#define COLOR7 #d7af5f
+#define COLOR8 #5fafd7
+#define COLOR9 #87afd7
+#define COLOR10 #8787af
+#define COLOR11 #8787d7
+#define COLOR12 #00afd7
+#define COLOR13 #87afff
+#define COLOR14 #000fff
+#define COLOR15 #fff000
+
+*color0:	COLOR0   
+*color8:        COLOR1
+*color1:        COLOR2
+*color9:        COLOR3
+*color2:        COLOR4
+*color10:       COLOR5
+*color3:        COLOR6
+*color11:       COLOR7
+*color4:        COLOR8
+*color12:       COLOR9
+*color5:        COLOR10
+*color13:       COLOR11
+*color6:        COLOR12
+*color14:       COLOR13
+*color7:        COLOR14
+*color15:       COLOR15
+
+! Colorscheme
+URxvt.foreground:	#F5F5F5
+URxvt.background:	#000000
+URxvt.cursorColor:	#9C9C9C
